@@ -1,8 +1,10 @@
-import { HandPalm, Play, Stop } from 'phosphor-react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as zod from 'zod';
 import { differenceInSeconds } from 'date-fns';
+import * as zod from 'zod';
+
+import { HandPalm, Play } from 'phosphor-react';
 
 import {
   CountdownContainer,
@@ -14,7 +16,6 @@ import {
   StartcountdownButton,
   StopcountdownButton,
 } from './home.styles';
-import { useEffect, useState } from 'react';
 
 const newCycleValidationSchema = zod.object({
   task: zod.string().min(8, 'Fill the task min 8 character'),
