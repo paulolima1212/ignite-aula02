@@ -8,6 +8,6 @@ export const GlobalStyle = createGlobalStyle`
  }
 
  body{
-  background: #333;
+  background: ${({ theme }) => theme.primary};
  }
 `;
