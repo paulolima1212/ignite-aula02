@@ -95,12 +95,26 @@ const BaseInput = styled.input`
   border: 0;
   border-bottom: solid 1px ${({ theme }) => theme['gray-400']};
   color: ${({ theme }) => theme['gray-100']};
+  padding: 0 0.5rem;
+  &::placeholder {
+    color: ${({ theme }) => theme['gray-400']};
+  }
+
+  &:focus {
+    border-color: ${({ theme }) => theme['green-500']};
+  }
 `;
 
 export const InputTask = styled(BaseInput)`
+  box-shadow: none;
   flex: 1;
+
+  &::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
 `;
 
 export const MinutesTask = styled(BaseInput)`
+  box-shadow: none;
   width: 4.5rem;
 `;
