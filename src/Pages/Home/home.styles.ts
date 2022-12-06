@@ -13,6 +13,7 @@ export const HomeContainer = styled.main`
     justify-content: center;
     align-items: center;
     gap: 3.5rem;
+    flex-wrap: wrap;
   }
 `;
 
@@ -25,7 +26,6 @@ export const FormContainer = styled.div`
   color: ${({ theme }) => theme['gray-100']};
   font-size: 1.125rem;
   font-weight: bold;
-  flex-wrap: wrap;
 
   label,
   span {
@@ -59,7 +59,7 @@ export const Separator = styled.div`
   border-radius: 8px;
 `;
 
-export const ButtonContainer = styled.button`
+export const BasecountdownButton = styled.button`
   flex: 1;
   width: 100%;
   height: 4rem;
@@ -69,14 +69,16 @@ export const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${({ theme }) => theme['gray-100']};
 
   gap: 0.5rem;
   font-weight: bold;
 
   cursor: pointer;
+`;
 
+export const StartcountdownButton = styled(BasecountdownButton)`
   background: ${({ theme }) => theme['green-500']};
-  color: ${({ theme }) => theme['gray-100']};
   &:not(:disabled):hover {
     background: ${({ theme }) => theme['green-700']};
   }
@@ -85,6 +87,13 @@ export const ButtonContainer = styled.button`
     opacity: 0.5;
     background: ${({ theme }) => theme['green-700']};
     cursor: not-allowed;
+  }
+`;
+
+export const StopcountdownButton = styled(BasecountdownButton)`
+  background: ${({ theme }) => theme['red-500']};
+  &:not(:disabled):hover {
+    background: ${({ theme }) => theme['red-700']};
   }
 `;
 
@@ -100,8 +109,12 @@ const BaseInput = styled.input`
     color: ${({ theme }) => theme['gray-400']};
   }
 
-  &:focus {
+  &:not(:disabled):focus {
     border-color: ${({ theme }) => theme['green-500']};
+  }
+
+  &:disabled {
+    border-color: ${({ theme }) => theme['red-500']};
   }
 `;
 
