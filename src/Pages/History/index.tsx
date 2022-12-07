@@ -1,6 +1,12 @@
+import { useHomeContext } from '../../Hooks/useHomeContext';
+
 import { HistoryContainer, StatusTask, TableContainer } from './history.styles';
 
 export function History() {
+  const { cycles } = useHomeContext();
+
+  console.log(cycles);
+
   return (
     <HistoryContainer>
       <h1>My History</h1>
