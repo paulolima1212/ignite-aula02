@@ -1,5 +1,10 @@
-import { createContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { createContext, useReducer, useState } from 'react';
+import {
+  addNewCycleAction,
+  interruptActiveCycleAction,
+  setCurrentCycleAsFinishedAction,
+} from '../Reducers/Cycles/actions';
+import { CyclesReducer } from '../Reducers/Cycles/reducer';
 
 export const homeContext = createContext({} as HomeContextProps);
 
@@ -30,16 +35,24 @@ interface HomeContextProps {
   setAmountSecondPassed: (amount: number) => void;
 }
 
-// const isSubmitDisabled = !task && !minAmount;
+interface CyclesState {
+  cycles: Cycle[];
+  activeCycleId: string | null;
+}
 
 export function HomeContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [cycles, setCycles] = useState<Cycle[]>([]);
-  const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+  const [cyclesState, dispatch] = useReducer(CyclesReducer, {
+    activeCycleId: null,
+    cycles: [],
+  });
+
   const [amountSecondPassed, setAmountSecondPassed] = useState(0);
+
+  const { cycles, activeCycleId } = cyclesState;
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
 
@@ -54,34 +67,16 @@ export function HomeContextProvider({
       startDate: new Date(),
     };
 
-    setCycles((prev) => [...prev, newCycle]);
-    setActiveCycleId(id);
+    dispatch(addNewCycleAction(newCycle));
     setAmountSecondPassed(0);
   }
 
   function setActiveCycleAsFinished() {
-    setCycles(
-      cycles.map((cycle) => {
-        if (cycle.id === activeCycleId) {
-          return { ...cycle, finishedDate: new Date() };
-        } else {
-          return cycle;
-        }
-      })
-    );
+    dispatch(setCurrentCycleAsFinishedAction());
   }
 
   function handleInterruptCycle() {
-    setCycles((prev) =>
-      prev.map((cycle) => {
-        if (cycle.id === activeCycleId) {
-          return { ...cycle, interruptedDate: new Date() };
-        } else {
-          return cycle;
-        }
-      })
-    );
-    setActiveCycleId(null);
+    dispatch(interruptActiveCycleAction());
   }
 
   const currentSeconds = activeCycle ? totalSeconds - amountSecondPassed : 0;
