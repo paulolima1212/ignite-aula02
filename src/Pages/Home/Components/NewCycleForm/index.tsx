@@ -21,7 +21,7 @@ export function NewCycleForm() {
       <label htmlFor='minutesAmount'>About</label>
       <MinutesTask
         step={5}
-        min={1}
+        min={5}
         max={60}
         placeholder='00'
         id='minutesAmount'
