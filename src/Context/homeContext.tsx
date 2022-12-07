@@ -25,7 +25,7 @@ interface HomeContextProps {
   activeCycle: Cycle | undefined;
   cycles: Cycle[];
   setActiveCycleAsFinished: () => void;
-  handleCreateNewCycle: (data: NewCycleProps) => void;
+  createNewCycle: (data: NewCycleProps) => void;
   handleInterruptCycle: () => void;
   setAmountSecondPassed: (amount: number) => void;
 }
@@ -45,7 +45,7 @@ export function HomeContextProvider({
 
   const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
 
-  function handleCreateNewCycle(data: NewCycleProps) {
+  function createNewCycle(data: NewCycleProps) {
     const id = String(new Date().getTime());
     const newCycle: Cycle = {
       id,
@@ -90,7 +90,7 @@ export function HomeContextProvider({
     <homeContext.Provider
       value={{
         activeCycle,
-        handleCreateNewCycle,
+        createNewCycle,
         handleInterruptCycle,
         setAmountSecondPassed,
         setActiveCycleAsFinished,

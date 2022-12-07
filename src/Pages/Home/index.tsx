@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 
 export function Home() {
-  const { activeCycle, handleCreateNewCycle, handleInterruptCycle } =
+  const { activeCycle, createNewCycle, handleInterruptCycle } =
     useHomeContext();
 
   type NewFormDataType = zod.infer<typeof newCycleValidationSchema>;
@@ -44,15 +44,15 @@ export function Home() {
 
   const isSubmitDisabled = !task;
 
-  function createNewCycle(data: NewFormDataType) {
-    handleCreateNewCycle(data);
+  function handleCreateNewCycle(data: NewFormDataType) {
+    createNewCycle(data);
 
     reset();
   }
 
   return (
     <HomeContainer>
-      <form onSubmit={handleSubmit(createNewCycle)}>
+      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormProvider {...newFormCycle}>
           <NewCycleForm />
         </FormProvider>

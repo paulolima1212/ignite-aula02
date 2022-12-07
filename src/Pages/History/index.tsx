@@ -1,11 +1,10 @@
 import { useHomeContext } from '../../Hooks/useHomeContext';
+import { formatDistanceToNow } from 'date-fns';
 
 import { HistoryContainer, StatusTask, TableContainer } from './history.styles';
 
 export function History() {
   const { cycles } = useHomeContext();
-
-  console.log(cycles);
 
   return (
     <HistoryContainer>
@@ -21,46 +20,33 @@ export function History() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Made a principal page of application</td>
-              <td>25 minutes</td>
-              <td>4h About</td>
-              <td>
-                <StatusTask statusColor={'inprogress'}>In progress</StatusTask>
-              </td>
-            </tr>
-            <tr>
-              <td>Made a principal page of application</td>
-              <td>25 minutes</td>
-              <td>4h About</td>
-              <td>
-                <StatusTask statusColor={'done'}>Done</StatusTask>
-              </td>
-            </tr>
-            <tr>
-              <td>Made a principal page of application</td>
-              <td>25 minutes</td>
-              <td>4h About</td>
-              <td>
-                <StatusTask statusColor={'done'}>Done</StatusTask>
-              </td>
-            </tr>
-            <tr>
-              <td>Made a principal page of application</td>
-              <td>25 minutes</td>
-              <td>4h About</td>
-              <td>
-                <StatusTask statusColor={'interrupted'}>Interrupted</StatusTask>
-              </td>
-            </tr>
-            <tr>
-              <td>Made a principal page of application</td>
-              <td>25 minutes</td>
-              <td>4h About</td>
-              <td>
-                <StatusTask statusColor={'done'}>Done</StatusTask>
-              </td>
-            </tr>
+            {cycles.map((cycle) => {
+              return (
+                <tr key={cycle.id}>
+                  <td>{cycle.task}</td>
+                  <td>{`${cycle.minutesAmount} minutes`}</td>
+                  <td>
+                    {formatDistanceToNow(cycle.startDate, { addSuffix: true })}
+                  </td>
+                  <td>
+                    {cycle.finishedDate && (
+                      <StatusTask statusColor={'done'}>Done</StatusTask>
+                    )}
+
+                    {cycle.interruptedDate && (
+                      <StatusTask statusColor={'interrupted'}>
+                        Interrupted
+                      </StatusTask>
+                    )}
+                    {!cycle.interruptedDate && !cycle.finishedDate && (
+                      <StatusTask statusColor={'inprogress'}>
+                        In progress
+                      </StatusTask>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </TableContainer>

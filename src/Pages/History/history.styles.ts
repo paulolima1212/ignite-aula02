@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { TypeOf } from 'zod';
 
 export const HistoryContainer = styled.div`
   display: flex;
@@ -7,12 +6,18 @@ export const HistoryContainer = styled.div`
   color: ${({ theme }) => theme['gray-100']};
   flex-direction: column;
   padding: 3.5rem;
+  overflow: hidden;
 `;
 
 export const TableContainer = styled.div`
   flex: 1;
   overflow: auto;
   margin-top: 2rem;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   table {
     width: 100%;
