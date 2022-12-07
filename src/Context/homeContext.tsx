@@ -57,8 +57,6 @@ export function HomeContextProvider({
     setCycles((prev) => [...prev, newCycle]);
     setActiveCycleId(id);
     setAmountSecondPassed(0);
-
-    // reset();
   }
 
   function setActiveCycleAsFinished() {
